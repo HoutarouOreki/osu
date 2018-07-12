@@ -19,14 +19,14 @@ namespace osu.Game.Rulesets.Mania
         }
 
         [BackgroundDependencyLoader]
-        private void load()
+        private void load(ManiaConfigManager config)
         {
             Children = new Drawable[]
             {
                 new SettingsEnumDropdown<ManiaScrollingDirection>
                 {
                     LabelText = "Scrolling direction",
-                    Bindable = ((ManiaConfigManager)Config).GetBindable<ManiaScrollingDirection>(ManiaSetting.ScrollDirection)
+                    Bindable = config.GetBindable<ManiaScrollingDirection>(ManiaSetting.ScrollDirection)
                 }
             };
         }

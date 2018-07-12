@@ -179,7 +179,7 @@ namespace osu.Game.Beatmaps.Formats
                 var baseInfo = base.ApplyTo(sampleInfo);
 
                 if (CustomSampleBank > 1)
-                    baseInfo.Suffix = CustomSampleBank.ToString();
+                    baseInfo.Name += CustomSampleBank;
 
                 return baseInfo;
             }

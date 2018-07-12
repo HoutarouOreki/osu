@@ -69,8 +69,8 @@ namespace osu.Game.Screens.Select
 
         private DependencyContainer dependencies;
 
-        protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
-            => dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
+        protected override IReadOnlyDependencyContainer CreateLocalDependencies(IReadOnlyDependencyContainer parent)
+            => dependencies = new DependencyContainer(base.CreateLocalDependencies(parent));
 
         protected SongSelect()
         {
@@ -138,11 +138,7 @@ namespace osu.Game.Screens.Select
                                 Height = filter_height,
                                 FilterChanged = c => Carousel.Filter(c),
                                 Background = { Width = 2 },
-                                Exit = () =>
-                                {
-                                    if (IsCurrentScreen)
-                                        Exit();
-                                },
+                                Exit = Exit,
                             },
                         }
                     },
@@ -193,6 +189,8 @@ namespace osu.Game.Screens.Select
             dependencies.CacheAs(Ruleset);
             dependencies.CacheAs<IBindable<RulesetInfo>>(Ruleset);
 
+            base.Ruleset.ValueChanged += r => updateSelectedBeatmap(beatmapNoDebounce);
+
             if (Footer != null)
             {
                 Footer.AddButton(@"random", colours.Green, triggerRandom, Key.F2);
@@ -220,12 +218,6 @@ namespace osu.Game.Screens.Select
             Beatmap.BindValueChanged(workingBeatmapChanged);
         }
 
-        protected override void LoadComplete()
-        {
-            base.LoadComplete();
-            base.Ruleset.ValueChanged += r => updateSelectedBeatmap(beatmapNoDebounce);
-        }
-
         public void Edit(BeatmapInfo beatmap)
         {
             Beatmap.Value = beatmaps.GetWorkingBeatmap(beatmap, Beatmap.Value);
@@ -239,10 +231,6 @@ namespace osu.Game.Screens.Select
         /// <param name="performStartAction">Whether to trigger <see cref="OnStart"/>.</param>
         public void FinaliseSelection(BeatmapInfo beatmap = null, bool performStartAction = true)
         {
-            // avoid attempting to continue before a selection has been obtained.
-            // this could happen via a user interaction while the carousel is still in a loading state.
-            if (Carousel.SelectedBeatmap == null) return;
-
             // if we have a pending filter operation, we want to run it now.
             // it could change selection (ie. if the ruleset has been changed).
             Carousel.FlushPendingFilterOperations();

@@ -360,6 +360,11 @@ namespace osu.Game.Overlays.Profile
                 Text = text
             };
 
+            if (user.Age != null)
+            {
+                infoTextLeft.AddText($"{user.Age} years old ", boldItalic);
+            }
+
             if (user.Country != null)
             {
                 infoTextLeft.AddText("From ", lightText);

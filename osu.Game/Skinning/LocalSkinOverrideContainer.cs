@@ -71,9 +71,9 @@ namespace osu.Game.Skinning
 
         private void onSourceChanged() => SourceChanged?.Invoke();
 
-        protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
+        protected override IReadOnlyDependencyContainer CreateLocalDependencies(IReadOnlyDependencyContainer parent)
         {
-            var dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
+            var dependencies = new DependencyContainer(base.CreateLocalDependencies(parent));
 
             fallbackSource = dependencies.Get<ISkinSource>();
             dependencies.CacheAs<ISkinSource>(this);

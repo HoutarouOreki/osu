@@ -3,7 +3,6 @@
 
 using osu.Framework.Allocation;
 using osu.Game.Rulesets;
-using osu.Game.Rulesets.Configuration;
 
 namespace osu.Game.Overlays.Settings
 {
@@ -15,8 +14,6 @@ namespace osu.Game.Overlays.Settings
     {
         private readonly Ruleset ruleset;
 
-        protected IRulesetConfigManager Config;
-
         protected RulesetSettingsSubsection(Ruleset ruleset)
         {
             this.ruleset = ruleset;
@@ -24,13 +21,13 @@ namespace osu.Game.Overlays.Settings
 
         private DependencyContainer dependencies;
 
-        protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
+        protected override IReadOnlyDependencyContainer CreateLocalDependencies(IReadOnlyDependencyContainer parent)
         {
-            dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
+            dependencies = new DependencyContainer(base.CreateLocalDependencies(parent));
 
-            Config = dependencies.Get<RulesetConfigCache>().GetConfigFor(ruleset);
-            if (Config != null)
-                dependencies.Cache(Config);
+            var config = dependencies.Get<RulesetConfigCache>().GetConfigFor(ruleset);
+            if (config != null)
+                dependencies.Cache(config);
 
             return dependencies;
         }

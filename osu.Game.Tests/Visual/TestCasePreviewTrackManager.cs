@@ -14,9 +14,9 @@ namespace osu.Game.Tests.Visual
     {
         private readonly PreviewTrackManager trackManager = new TestPreviewTrackManager();
 
-        protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
+        protected override IReadOnlyDependencyContainer CreateLocalDependencies(IReadOnlyDependencyContainer parent)
         {
-            var dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
+            var dependencies = new DependencyContainer(base.CreateLocalDependencies(parent));
             dependencies.CacheAs(trackManager);
             dependencies.CacheAs<IPreviewTrackOwner>(this);
             return dependencies;
@@ -101,9 +101,9 @@ namespace osu.Game.Tests.Visual
                 AddInternal(track);
             }
 
-            protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
+            protected override IReadOnlyDependencyContainer CreateLocalDependencies(IReadOnlyDependencyContainer parent)
             {
-                var dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
+                var dependencies = new DependencyContainer(base.CreateLocalDependencies(parent));
                 dependencies.CacheAs<IPreviewTrackOwner>(this);
                 return dependencies;
             }

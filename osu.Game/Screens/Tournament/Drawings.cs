@@ -49,8 +49,8 @@ namespace osu.Game.Screens.Tournament
 
         private DependencyContainer dependencies;
 
-        protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent) =>
-            dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
+        protected override IReadOnlyDependencyContainer CreateLocalDependencies(IReadOnlyDependencyContainer parent) =>
+            dependencies = new DependencyContainer(base.CreateLocalDependencies(parent));
 
         [BackgroundDependencyLoader]
         private void load(TextureStore textures, Storage storage)

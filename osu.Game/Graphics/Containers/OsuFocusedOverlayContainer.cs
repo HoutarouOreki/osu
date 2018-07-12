@@ -26,9 +26,9 @@ namespace osu.Game.Graphics.Containers
 
         protected readonly Bindable<OverlayActivation> OverlayActivationMode = new Bindable<OverlayActivation>(OverlayActivation.All);
 
-        protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
+        protected override IReadOnlyDependencyContainer CreateLocalDependencies(IReadOnlyDependencyContainer parent)
         {
-            var dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
+            var dependencies = new DependencyContainer(base.CreateLocalDependencies(parent));
             dependencies.CacheAs<IPreviewTrackOwner>(this);
             return dependencies;
         }

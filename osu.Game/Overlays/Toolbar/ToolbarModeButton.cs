@@ -7,7 +7,7 @@ using OpenTK.Graphics;
 
 namespace osu.Game.Overlays.Toolbar
 {
-    public class ToolbarRulesetButton : ToolbarButton
+    public class ToolbarModeButton : ToolbarButton
     {
         private RulesetInfo ruleset;
         public RulesetInfo Ruleset

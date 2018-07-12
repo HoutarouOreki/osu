@@ -46,9 +46,7 @@ namespace osu.Game.Screens.Select.Leaderboards
         public void UpdateRank(ScoreRank newRank)
         {
             Rank = newRank;
-
-            if (IsLoaded)
-                updateTexture();
+            updateTexture();
         }
     }
 }

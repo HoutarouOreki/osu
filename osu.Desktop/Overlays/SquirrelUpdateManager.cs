@@ -3,7 +3,6 @@
 
 #if NET_FRAMEWORK
 using System;
-using System.Threading.Tasks;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Colour;
@@ -17,7 +16,7 @@ using OpenTK;
 using OpenTK.Graphics;
 using Squirrel;
 
-namespace osu.Desktop.Updater
+namespace osu.Desktop.Overlays
 {
     public class SquirrelUpdateManager : Component
     {
@@ -36,7 +35,7 @@ namespace osu.Desktop.Updater
             notificationOverlay = notification;
 
             if (game.IsDeployedBuild)
-                Schedule(() => Task.Run(() => checkForUpdateAsync()));
+                Schedule(() => checkForUpdateAsync());
         }
 
         private async void checkForUpdateAsync(bool useDeltaPatching = true, UpdateProgressNotification notification = null)

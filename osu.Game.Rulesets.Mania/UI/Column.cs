@@ -118,9 +118,9 @@ namespace osu.Game.Rulesets.Mania.UI
             }
         }
 
-        protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
+        protected override IReadOnlyDependencyContainer CreateLocalDependencies(IReadOnlyDependencyContainer parent)
         {
-            var dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
+            var dependencies = new DependencyContainer(base.CreateLocalDependencies(parent));
             dependencies.CacheAs<IBindable<ManiaAction>>(Action);
             return dependencies;
         }

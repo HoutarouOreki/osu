@@ -19,7 +19,9 @@ namespace osu.Game.Rulesets.Mania.Beatmaps.Patterns.Legacy
         public EndTimeObjectPatternGenerator(FastRandom random, HitObject hitObject, ManiaBeatmap beatmap, IBeatmap originalBeatmap)
             : base(random, hitObject, beatmap, new Pattern(), originalBeatmap)
         {
-            endTime = (HitObject as IHasEndTime)?.EndTime ?? 0;
+            var endtimeData = HitObject as IHasEndTime;
+
+            endTime = endtimeData?.EndTime ?? 0;
         }
 
         public override IEnumerable<Pattern> Generate()

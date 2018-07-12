@@ -16,18 +16,18 @@ using osu.Game.Rulesets;
 
 namespace osu.Game.Overlays.Toolbar
 {
-    public class ToolbarRulesetSelector : Container
+    public class ToolbarModeSelector : Container
     {
         private const float padding = 10;
 
         private readonly FillFlowContainer modeButtons;
         private readonly Drawable modeButtonLine;
-        private ToolbarRulesetButton activeButton;
+        private ToolbarModeButton activeButton;
 
         private RulesetStore rulesets;
         private readonly Bindable<RulesetInfo> ruleset = new Bindable<RulesetInfo>();
 
-        public ToolbarRulesetSelector()
+        public ToolbarModeSelector()
         {
             RelativeSizeAxes = Axes.Y;
 
@@ -73,7 +73,7 @@ namespace osu.Game.Overlays.Toolbar
             this.rulesets = rulesets;
             foreach (var r in rulesets.AvailableRulesets)
             {
-                modeButtons.Add(new ToolbarRulesetButton
+                modeButtons.Add(new ToolbarModeButton
                 {
                     Ruleset = r,
                     Action = delegate { ruleset.Value = r; }
@@ -115,7 +115,7 @@ namespace osu.Game.Overlays.Toolbar
 
         private void rulesetChanged(RulesetInfo ruleset)
         {
-            foreach (ToolbarRulesetButton m in modeButtons.Children.Cast<ToolbarRulesetButton>())
+            foreach (ToolbarModeButton m in modeButtons.Children.Cast<ToolbarModeButton>())
             {
                 bool isActive = m.Ruleset.ID == ruleset.ID;
                 m.Active = isActive;

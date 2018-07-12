@@ -70,8 +70,7 @@ namespace osu.Game.Rulesets.UI
 
         protected readonly Ruleset Ruleset;
 
-        protected IRulesetConfigManager Config { get; private set; }
-
+        private IRulesetConfigManager rulesetConfig;
         private OnScreenDisplay onScreenDisplay;
 
         /// <summary>
@@ -86,17 +85,17 @@ namespace osu.Game.Rulesets.UI
             Cursor = CreateCursor();
         }
 
-        protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
+        protected override IReadOnlyDependencyContainer CreateLocalDependencies(IReadOnlyDependencyContainer parent)
         {
-            var dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
+            var dependencies = new DependencyContainer(base.CreateLocalDependencies(parent));
 
             onScreenDisplay = dependencies.Get<OnScreenDisplay>();
 
-            Config = dependencies.Get<RulesetConfigCache>().GetConfigFor(Ruleset);
-            if (Config != null)
+            rulesetConfig = dependencies.Get<RulesetConfigCache>().GetConfigFor(Ruleset);
+            if (rulesetConfig != null)
             {
-                dependencies.Cache(Config);
-                onScreenDisplay?.BeginTracking(this, Config);
+                dependencies.Cache(rulesetConfig);
+                onScreenDisplay?.BeginTracking(this, rulesetConfig);
             }
 
             return dependencies;
@@ -144,10 +143,10 @@ namespace osu.Game.Rulesets.UI
         {
             base.Dispose(isDisposing);
 
-            if (Config != null)
+            if (rulesetConfig != null)
             {
-                onScreenDisplay?.StopTracking(this, Config);
-                Config = null;
+                onScreenDisplay?.StopTracking(this, rulesetConfig);
+                rulesetConfig = null;
             }
         }
     }

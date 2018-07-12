@@ -70,19 +70,19 @@ namespace osu.Game.Rulesets.Mania.UI
         }
 
         [BackgroundDependencyLoader]
-        private void load()
+        private void load(ManiaConfigManager config)
         {
             BarLines.ForEach(Playfield.Add);
 
-            ((ManiaConfigManager)Config).BindWith(ManiaSetting.ScrollDirection, configDirection);
+            config.BindWith(ManiaSetting.ScrollDirection, configDirection);
             configDirection.BindValueChanged(d => scrollingInfo.Direction.Value = (ScrollingDirection)d, true);
         }
 
         private DependencyContainer dependencies;
 
-        protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
+        protected override IReadOnlyDependencyContainer CreateLocalDependencies(IReadOnlyDependencyContainer parent)
         {
-            dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
+            dependencies = new DependencyContainer(base.CreateLocalDependencies(parent));
             dependencies.CacheAs<IScrollingInfo>(scrollingInfo = new ScrollingInfo());
             return dependencies;
         }

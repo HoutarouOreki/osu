@@ -1,9 +1,6 @@
 ﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
 // Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using NUnit.Framework;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Colour;
@@ -16,13 +13,6 @@ namespace osu.Game.Tests.Visual
     [TestFixture]
     public class TestCaseButtonSystem : OsuTestCase
     {
-        public override IReadOnlyList<Type> RequiredTypes => new[]
-        {
-            typeof(ButtonSystem),
-            typeof(ButtonArea),
-            typeof(Button)
-        };
-
         public TestCaseButtonSystem()
         {
             OsuLogo logo;
@@ -40,9 +30,6 @@ namespace osu.Game.Tests.Visual
             };
 
             buttons.SetOsuLogo(logo);
-
-            foreach (var s in Enum.GetValues(typeof(ButtonSystemState)).OfType<ButtonSystemState>().Skip(1))
-                AddStep($"State to {s}", () => buttons.State = s);
         }
     }
 }

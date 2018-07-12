@@ -9,7 +9,6 @@ using osu.Framework.Localisation;
 using osu.Game.Beatmaps;
 using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.Sprites;
-
 namespace osu.Game.Overlays.Profile.Sections
 {
     /// <summary>
@@ -33,10 +32,7 @@ namespace osu.Game.Overlays.Profile.Sections
         {
             Action = () =>
             {
-                if (beatmap.OnlineBeatmapID != null)
-                    beatmapSetOverlay?.FetchAndShowBeatmap(beatmap.OnlineBeatmapID.Value);
-                else if (beatmap.BeatmapSet?.OnlineBeatmapSetID != null)
-                    beatmapSetOverlay?.FetchAndShowBeatmapSet(beatmap.BeatmapSet.OnlineBeatmapSetID.Value);
+                if (beatmap.BeatmapSet?.OnlineBeatmapSetID != null) beatmapSetOverlay?.FetchAndShowBeatmapSet(beatmap.BeatmapSet.OnlineBeatmapSetID.Value);
             };
 
             Child = new FillFlowContainer

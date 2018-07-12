@@ -14,8 +14,6 @@ using osu.Game.Graphics;
 using OpenTK;
 using OpenTK.Graphics;
 using osu.Framework.Extensions.Color4Extensions;
-using osu.Framework.Graphics.Transforms;
-using osu.Framework.Threading;
 using osu.Game.Configuration;
 using osu.Game.Graphics.Sprites;
 
@@ -137,7 +135,7 @@ namespace osu.Game.Overlays
         /// <exception cref="InvalidOperationException">If <paramref name="configManager"/> is already being tracked from the same <paramref name="source"/>.</exception>
         public void BeginTracking(object source, ITrackableConfigManager configManager)
         {
-            if (configManager == null) throw new ArgumentNullException(nameof(configManager));
+            if (configManager == null)　throw new ArgumentNullException(nameof(configManager));
 
             if (trackedConfigManagers.ContainsKey((source, configManager)))
                 throw new InvalidOperationException($"{nameof(configManager)} is already registered.");
@@ -161,7 +159,7 @@ namespace osu.Game.Overlays
         /// <exception cref="InvalidOperationException">If <paramref name="configManager"/> is not being tracked from the same <see cref="source"/>.</exception>
         public void StopTracking(object source, ITrackableConfigManager configManager)
         {
-            if (configManager == null) throw new ArgumentNullException(nameof(configManager));
+            if (configManager == null)　throw new ArgumentNullException(nameof(configManager));
 
             if (!trackedConfigManagers.TryGetValue((source, configManager), out var existing))
                 throw new InvalidOperationException($"{nameof(configManager)} is not registered.");
@@ -183,7 +181,7 @@ namespace osu.Game.Overlays
                 if (string.IsNullOrEmpty(textLine3.Text))
                     textLine3.Text = "NO KEY BOUND";
 
-                DisplayTemporarily(box);
+                Display(box);
 
                 int optionCount = 0;
                 int selectedOption = -1;
@@ -215,29 +213,15 @@ namespace osu.Game.Overlays
             });
         }
 
-        private TransformSequence<Drawable> fadeIn;
-        private ScheduledDelegate fadeOut;
-
-        protected virtual void DisplayTemporarily(Drawable toDisplay)
+        protected virtual void Display(Drawable toDisplay)
         {
-            // avoid starting a new fade-in if one is already active.
-            if (fadeIn == null)
-            {
-                fadeIn = toDisplay.Animate(
-                    b => b.FadeIn(500, Easing.OutQuint),
-                    b => b.ResizeHeightTo(height, 500, Easing.OutQuint)
-                );
-
-                fadeIn.Finally(_ => fadeIn = null);
-            }
-
-            fadeOut?.Cancel();
-            fadeOut = Scheduler.AddDelayed(() =>
-            {
-                toDisplay.Animate(
-                    b => b.FadeOutFromOne(1500, Easing.InQuint),
-                    b => b.ResizeHeightTo(height_contracted, 1500, Easing.InQuint));
-            }, 500);
+            toDisplay.Animate(
+                b => b.FadeIn(500, Easing.OutQuint),
+                b => b.ResizeHeightTo(height, 500, Easing.OutQuint)
+            ).Then(
+                b => b.FadeOutFromOne(1500, Easing.InQuint),
+                b => b.ResizeHeightTo(height_contracted, 1500, Easing.InQuint)
+            );
         }
 
         private class OptionLight : Container
