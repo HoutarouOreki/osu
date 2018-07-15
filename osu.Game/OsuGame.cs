@@ -454,7 +454,15 @@ namespace osu.Game
             switch (action)
             {
                 case GlobalAction.ToggleChat:
-                    chat.ToggleVisibility();
+                    if (chat.IsLoggedIn) chat.ToggleVisibility();
+                    else
+                    {
+                        notifications.Post(new SimpleNotification
+                        {
+                            Icon = FontAwesome.fa_sign_in,
+                            Text = "Please sign in to participate in chat!"
+                        });
+                    }
                     return true;
                 case GlobalAction.ToggleSocial:
                     social.ToggleVisibility();

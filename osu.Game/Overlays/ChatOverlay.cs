@@ -189,6 +189,8 @@ namespace osu.Game.Overlays
         private double startDragChatHeight;
         private bool isDragging;
 
+        public bool IsLoggedIn => api.IsLoggedIn;
+
         public void OpenChannel(Channel channel) => addChannel(channel);
 
         protected override bool OnDragStart(InputState state)
